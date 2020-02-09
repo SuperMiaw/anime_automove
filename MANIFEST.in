@@ -1,0 +1,4 @@
+include anime_automove/res/*.spec
+include anime_automove/sample/conf/*.ini
+include anime_automove/sample/script/*.sh
+include anime_automove/sample/*.txt
