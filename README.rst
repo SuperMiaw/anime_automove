@@ -17,6 +17,7 @@ keep moving file yourself which it can be tiresome if you have many.
 How it works
 ------------
 There is two main mechanism in this program:
+
 1. (learn) try to guess new required rules according to what you have in drop folder.
 2. (execute) Application of rules to move for real the anime in the goods directory
 
@@ -24,6 +25,7 @@ It works only if you file follow this convention :
 [<team>] <anime_anime> - <Number Ep> + v<Version><other_data>.<extension>
 
 You can also manage rules :
+
 1. (deleting) if you made any error during config.
 2. (show) if you wanna know what you have setup by using learn operation.
 3. (cleanup) to speed up process by removing old rules not matched since a long time.
