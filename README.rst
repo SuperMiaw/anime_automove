@@ -37,7 +37,7 @@ Samples are included along to show you how to make things
 
 Install
 -------
-python2.7 setup.py install (or develop)
+python3 setup.py install (or develop)
 
 
 FreeBSD users
