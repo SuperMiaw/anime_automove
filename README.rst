@@ -3,7 +3,7 @@ Anime AutoMove
 
 Requirement
 -----------
-1. `python-2.7` for making this program works.
+1. `python3` for making this program works.
 2. `sqlite3` to store sync status of files.
 3. `vixie-cron` working to automate tasks.
 
