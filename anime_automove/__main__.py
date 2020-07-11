@@ -48,7 +48,7 @@ def main():
     # LOCALE
     #
     if sys.stdout.encoding is None:
-        print >> sys.stderr, "Encoding for output seems missing... "
+        print("Encoding for output seems missing... ", file=sys.stderr)
         "You should set env variable PYTHONIOENCODING=UTF-8. "
         "Example: running 'export PYTHONIOENCODING=UTF-8' before calling this program"
         exit(1)
@@ -71,27 +71,28 @@ def main():
 
     if os.path.isfile(cfg.lock_file):
         if cfg.verbose:
-            print "Lock file found (%s), stopping program..." % cfg.lock_file
+            print("Lock file found (%s), stopping program..." % cfg.lock_file)
         sys.exit()
     else:
         if cfg.verbose:
-            print "Starting operations..."
-            print "Creating lock file (%s)" % cfg.lock_file
-        file(cfg.lock_file, 'w').write(pid)
+            print("Starting operations...")
+            print("Creating lock file (%s)" % cfg.lock_file)
+        with open(cfg.lock_file, 'w') as f:
+            f.write(pid)
 
     # EXIT HANDLER
     #
     remote = None
 
     def handler(signum=None, frame=None):
-        print "Exiting..."
-        print remote
+        print("Exiting...")
+        print(remote)
 
         if remote.process is not None:
             try:
                 remote.process.terminate()
             except:
-                print "Operation stopped"
+                print("Operation stopped")
 
         os.unlink(cfg.lock_file)
         exit(0)
@@ -106,11 +107,11 @@ def main():
             learn = Learn(config=cfg)
 
             animes = learn.find_distinct_names()
-            print "Searching new animes... %s candidates !" % len(animes)
+            print("Searching new animes... %s candidates !" % len(animes))
 
             for anime in animes:
                 if learn.exist(anime):
-                    print "Ignored (exist): %s" % anime
+                    print("Ignored (exist): %s" % anime)
                 else:
                     learn.suggest_add_name(anime)
 
@@ -132,33 +133,33 @@ def main():
             # Removing rule by pattern
             remove = Remove(config=cfg)
 
-            print "Trying to remove rule (pattern='%s')" % args.delete
+            print("Trying to remove rule (pattern='%s')" % args.delete)
             success = remove.remove(pattern=args.delete)
 
             if success:
-                print "Rule removed..."
+                print("Rule removed...")
             else:
-                print "Rule not found !"
+                print("Rule not found !")
 
         elif args.cleanup:
             # Cleaning up old rules
             remove = Remove(config=cfg)
 
-            print "Cleaning rules older than %s days..." % cfg.rule_cleanup_days
+            print("Cleaning rules older than %s days..." % cfg.rule_cleanup_days)
             success = remove.cleanup(cfg.rule_cleanup_days)
 
         else:
             # (No actions)
-            print "You haven't asked any action... Printing Help."
+            print("You haven't asked any action... Printing Help.")
             parser.print_help()
 
     except:
-        print "Fatal error"
+        print("Fatal error")
         traceback.print_exc()
 
     if os.path.isfile(cfg.lock_file):
         if cfg.verbose:
-            print "Removing lock file (%s)" % cfg.lock_file
+            print("Removing lock file (%s)" % cfg.lock_file)
 
         os.unlink(cfg.lock_file)
 

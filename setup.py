@@ -6,7 +6,7 @@ from setuptools import setup, find_packages
 setup(
     name="anime_automove",
 
-    version="1.0.0",
+    version="2.0.0",
 
     description="Organize anime from a drop folder to another one relying on fansub naming convention",
 
@@ -15,6 +15,8 @@ setup(
     #classifiers=[
     #
     #],
+
+    python_requires='>=3',
 
     install_requires=[
         'sqlalchemy',

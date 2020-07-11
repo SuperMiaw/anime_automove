@@ -6,7 +6,7 @@ eval `keychain --noask --quiet --eval id_dsa`
 
 # Set-up python environnement
 export PYTHONIOENCODING=UTF-8
-PYTHON27=/usr/local/bin/python2.7
+PYTHON3=/usr/local/bin/python3
 
 # Run
-${PYTHON27} -m anime_automove --config FULL_PATH_TO_CONF --execute
+${PYTHON3} -m anime_automove --config FULL_PATH_TO_CONF --execute

@@ -4,7 +4,7 @@ import shutil
 
 from anime_automove.util.dal import RuleAccess, Rule
 from anime_automove.util.file import Anime
-from util.app import Config
+from anime_automove.util.app import Config
 
 
 class Learn:
@@ -72,25 +72,25 @@ class Learn:
         """
         tgt_dir = self._config.tgt_dir
 
-        print "Found new file '%s' !" % name
+        print("Found new file '%s' !" % name)
 
         should_add = None
         while True:
-            should_add = raw_input("Create rule for '%s' ? [(y)/n] " % name)
+            should_add = input("Create rule for '%s' ? [(y)/n] " % name)
             if should_add in ('', 'y', 'n'):
                 break
 
         if should_add == 'n':
             return
 
-        destination = raw_input("Destination folder : [%s] in '%s' (customize sub_folders) : " % (tgt_dir, name))\
+        destination = input("Destination folder : [%s] in '%s' (customize sub_folders) : " % (tgt_dir, name))\
             .strip().decode('utf8')
 
         rule_access = RuleAccess()
         new_rule = Rule(pattern=name, destination=destination or name, is_regex=False)
         rule_access.add(new_rule)
 
-        print "notice: new rule added if name '%s' then move to '%s'" % (name, os.path.join(tgt_dir,destination or name))
+        print("notice: new rule added if name '%s' then move to '%s'" % (name, os.path.join(tgt_dir,destination or name)))
         return
 
 
@@ -140,7 +140,7 @@ class Execute:
 
         rule = rule_access.find_by_pattern(anime.name)
         if rule is None:
-            print "warning: no rule for '%s' (run '-d' to learn new rules))" % anime.name
+            print("warning: no rule for '%s' (run '-d' to learn new rules))" % anime.name)
             return False
 
         # Updating record for cleanup routines
@@ -148,20 +148,20 @@ class Execute:
 
         full_tgt_dir = os.path.join(self._config.tgt_dir, rule.destination)
         if not os.path.exists(full_tgt_dir):
-            print "notice: create folder '%s' in '%s'" % (rule.destination, self._config.tgt_dir)
+            print("notice: create folder '%s' in '%s'" % (rule.destination, self._config.tgt_dir))
             os.makedirs(full_tgt_dir)
 
         if not os.path.isdir(full_tgt_dir):
-            print "warning: '%s' is not a directory. rule will be skipped until you fix it !" % full_tgt_dir
+            print("warning: '%s' is not a directory. rule will be skipped until you fix it !" % full_tgt_dir)
             return False
 
         full_tgt_file = os.path.join(full_tgt_dir, anime.name)
         if os.path.exists(full_tgt_file):
-            print "warning: destination file '%s' already exist ! aborting..." % full_tgt_dir
+            print("warning: destination file '%s' already exist ! aborting..." % full_tgt_dir)
             return
 
         full_src_file = os.path.join(self._config.src_dir, anime.fullname)
-        print "notice: moving '%s' to '%s'" % (full_src_file, full_tgt_dir)
+        print("notice: moving '%s' to '%s'" % (full_src_file, full_tgt_dir))
         shutil.move(full_src_file, full_tgt_dir)
 
         return True
@@ -212,7 +212,7 @@ class Remove:
 
         if self._config.rule_cleanup_days is None or self._config.rule_cleanup_days < 1:
             if self._config.verbose:
-                print "warning: cleanup has not been set or is invalid"
+                print("warning: cleanup has not been set or is invalid")
             return False
 
         rules_access.remove_older_than(self._config.rule_cleanup_days)
@@ -235,22 +235,22 @@ class Show:
     def show_all(self):
         rule_access = RuleAccess()
 
-        print "## General"
-        print "Scan directory : %s" % self._config.src_dir
-        print ""
+        print("## General")
+        print("Scan directory : %s" % self._config.src_dir)
+        print("")
 
-        print "## Rules stored"
+        print("## Rules stored")
 
         rules = rule_access.get_all()
         count = 0
         for rule in rules:
             tgt_full_path = os.path.join(self._config.tgt_dir, rule.destination)
 
-            print "Pattern '%s':" % rule.pattern
-            print "* Move to: '%s' " % tgt_full_path
-            print "* Last Match: %s" % rule.last_match
-            print ""
+            print("Pattern '%s':" % rule.pattern)
+            print("* Move to: '%s' " % tgt_full_path)
+            print("* Last Match: %s" % rule.last_match)
+            print("")
             count += 1
 
-        print "##"
-        print "Total rules : %s" % count
+        print("##")
+        print("Total rules : %s" % count)
