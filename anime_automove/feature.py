@@ -84,7 +84,7 @@ class Learn:
             return
 
         destination = input("Destination folder : [%s] in '%s' (customize sub_folders) : " % (tgt_dir, name))\
-            .strip().decode('utf8')
+            .strip()
 
         rule_access = RuleAccess()
         new_rule = Rule(pattern=name, destination=destination or name, is_regex=False)
