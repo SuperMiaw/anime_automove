@@ -9,16 +9,16 @@ Requirement
 
 Description
 -----------
-That utility help to organize your new animes you may have downloaded with another program.<br/>It will try to extract anime name
-using fansub popular conventions and move them to another directory.
+This application sort new downloaded anime file from a folder to another.<br/>This script rely on fansub convention to works.<br/>
+Missing directory will be automatically created if needed.
 
-Quite usefull for a media center like Plex Media Server, missing directory will be created if needed and you will be ensured to not have to do it manually.
+Exemple of use : To layout a folder in format expected by Plex Media Server.
 
 How it works
 ------------
 There is two main mechanism in this program:
 
-1. (learn) try to guess new required rules according to what you have in drop folder.
+1. (learn) Setup new sort rule. One suggestion will be made based on file name but the destination folder can be customized.
 2. (execute) Application of rules to move for real the anime in the goods directory
 
 It works only if your file follow this convention :
@@ -47,14 +47,5 @@ python3 setup.py install (or develop)
 FreeBSD users
 =============
 
-Python3
--------
-The support of sqlite3 isn't bundled within `python3` you will have to install `py-sqlite3` to make it
-works.
-
-Locale
-------
-Ensure local are properly configured on client and server side, else you will get into trouble.
-You can customize your `/etc/login.conf` or `~/.login.conf`.
-see : https://www.freebsd.org/doc/handbook/using-localization.html
-
+- The support of `sqlite3` isn't bundled within `python3` you will also need to install `py-sqlite3`.
+- Ensure local are properly configured on client and server side. Hint : Customize your `/etc/login.conf` or `~/.login.conf`.<br/>See: https://www.freebsd.org/doc/handbook/using-localization.html
